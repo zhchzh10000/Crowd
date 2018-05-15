@@ -35,7 +35,7 @@ def send_email_code(email, send_type="register", user_id=None):
 
     if send_type == "register":
         email_title = "燎原众筹网 注册激活链接"
-        email_body = "欢迎注册燎原众筹网:  请点击下面的链接激活你的账号: http://192.168.20.37:8000/users/active/{0}LyZcW{1}".format(code, user_id)
+        email_body = "欢迎注册燎原众筹网:  请点击下面的链接激活你的账号: http://127.0.0.1:8000/users/active/{0}LyZcW{1}".format(code, user_id)
         msg = EmailMessage(email_title, email_body, EMAIL_FROM, [email])
         msg.content_subtype = "html"
         send_status = msg.send()
