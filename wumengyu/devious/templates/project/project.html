@@ -1,0 +1,238 @@
+{% extends 'p_base.html' %}
+{% load staticfiles %}
+{% block extra_style %}
+	<style>
+#footer {
+    padding: 15px 0;
+    background: #fff;
+    border-top: 1px solid #ddd;
+    text-align: center;
+}
+#topcontrol {
+  color: #fff;
+  z-index: 99;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  background: #222;
+  position: relative;
+  right: 14px !important;
+  bottom: 11px !important;
+  border-radius: 3px !important;
+}
+
+#topcontrol:after {
+  /*top: -2px;*/
+  left: 8.5px;
+  content: "\f106";
+  position: absolute;
+  text-align: center;
+  font-family: FontAwesome;
+}
+
+#topcontrol:hover {
+    color: #fff;
+    background: #18ba9b;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    border-bottom-color: #ddd;
+}
+.nav-tabs>li>a {
+    border-radius: 0;
+}
+	</style>
+{% endblock extra_style %}
+{% block content %}
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+                    <div class="jumbotron nofollow" style="    padding-top: 10px;">
+                        <h3>
+                            {{ project.name }}
+                        </h3>
+                        <div style="float:left;width:70%;">
+                            {{ project.desc }}
+                        </div>
+                        <div style="float:right;">
+                            <button type="button" id = 'bnn' data-fav-type="{{ project.company.id }}" class="btn btn-default"><i style="color:#f60" class="glyphicon glyphicon-heart"></i>{% if fav_com %} 已关注{% else %} 关注{% endif %}{{ num }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+                    <div class="row clearfix">
+                        <div class="col-md-8 column">
+                            <img alt="140x140" width="740" src="{{ MEDIA_URL }}{{ project.image1 }}" />
+                            <img alt="140x140" width="740" src="{{ MEDIA_URL }}{{ project.image2 }}" />
+
+                        </div>
+                        <div class="col-md-4 column">
+                            <div class="panel panel-default" style="border-radius: 0px;">
+                                <div class="panel-heading" style="background-color: #fff;border-color: #fff;">
+                                    <span class="label label-success"><i class="glyphicon glyphicon-tag"></i> {{ project.get_status_display }}</span>
+                                </div>
+                                <div class="panel-body">
+                                    <h3 >
+                                        已筹资金：￥{{ project.supportmoney }}
+                                    </h3>
+                                    <p><span>目标金额 ： {{ project.money }}.00</span><span style="float:right;">达成 ： {% widthratio project.money project.supportmoney 10 %}%</span></p>
+                                    <div class="progress" style="height:10px; margin-bottom: 5px;">
+                                      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
+                                    </div>
+                                    <p>剩余 {{ project.get_time }} 天</p>
+                                    <div>
+                                        <p><span>已有{{ project.supporter }}人支持该项目</span></p>
+                                     <button type="button" class="btn  btn-warning btn-lg btn-block" data-toggle="modal" data-target="#myModal">立即支持</button>
+                                    </div>
+                                </div>
+                                <div class="panel-footer" style="    background-color: #fff;
+                                    border-top: 1px solid #ddd;
+                                    border-bottom-right-radius: 0px;
+                                    border-bottom-left-radius: 0px;">
+                                <div class="container-fluid">
+                                    <div class="row clearfix">
+                                        <div class="col-md-3 column" style="padding:0;">
+                                <img alt="140x140" src="{{ MEDIA_URL }}{{ project.company.image }}" data-holder-rendered="true" style="width: 80px; height: 80px;">
+                                </div>
+                                <div class="col-md-9 column">
+                                    <div class="">
+                                        <h4>
+                                            <b>{{ project.company.name }}</b> <span style="float:right;font-size:12px;" class="label label-success">已认证</span>
+                                        </h4>
+                                        <p style="font-size:12px">
+                                            {{ project.company.desc }}
+
+                                        </p>
+                                        <p style="font-size:12px">
+                                        客服电话:0595-{{ project.company.phone }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                            {% for good in return_goods %}
+					<div class="panel panel-default" style="border-radius: 0px;">
+						<div class="panel-heading">
+							<h3 >
+								￥{{ good.pay_money }}.00 <span style="float:right;font-size:12px;">{{ good.palces }}，{{ good.project.supporter }}位支持者</span>
+							</h3>
+						</div>
+						<div class="panel-body">
+                            <p>配送费用：{{ good.freight }}</p>
+                            <p>预计发放时间：项目筹款成功后的{{ good.return_goods_time }}天内</p>
+                            <button type="button" class="btn  btn-warning btn-lg" onclick="window.location.href='/project/pay/?id={{ project.id }}&mon={{ good.pay_money }}'">支持</button>
+                            <br><br>
+                            <p>{{ good.desc }}）。</p>
+						</div>
+					</div>
+{% endfor %}
+
+                    <div><h2>为你推荐</h2><hr></div>
+					<div class="prjtip panel panel-default" style="border-radius: 0px;">
+						<div class="panel-body">
+                            <img src="img/product-3.png" width="100%" height="100%">
+						</div>
+					</div>
+
+					<div class="prjtip panel panel-default" style="border-radius: 0px;">
+						<div class="panel-body">
+                            <img src="img/product-4.jpg" width="100%" height="100%">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+      <div class="modal-dialog "  style="width:960px;height:400px;" role="document">
+        <div class="modal-content" data-spy="scroll" data-target="#myScrollspy">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">选择支持项</h4>
+          </div>
+          <div class="modal-body">
+<div class="container-fluid">
+	<div class="row clearfix">
+		<div class="col-sm-3 col-md-3 column" id="myScrollspy">
+            <ul class="nav nav-tabs nav-stacked">
+                {% for good in return_goods %}
+                <li class="active"><a href="#section-1">￥{{ good.pay_money }}.00</a></li>
+                {% endfor %}
+            </ul>
+		</div>
+		<div id="navList" class="col-sm-9 col-md-9 column" style="height:400px;overflow-y:auto;">
+            {% for good in return_goods %}
+            <h2 id="section-1" style="border-bottom:1px dashed #ddd;" ><span style="font-size:20px;font-weight:bold;">￥{{ good.pay_money }}.00</span><span style="font-size:12px;margin-left:60px;">{{ good.palces }}，{{ good.project.supporter }}位支持者</span></h2>
+            <p>配送费用：全国{{ good.freight }}</p>
+            <p>预计发放时间：项目筹款成功后的{{ good.return_goods_time }}天内</p>
+            <button type="button" class="btn  btn-warning btn-lg " onclick="window.location.href='/project/pay/?id={{ project.id }}&mon={{ good.pay_money }}'">支持</button>
+            <br><br>
+            <p>{{ good.desc }}</p>
+            <hr>
+            {% endfor %}
+            </div>
+        </div>
+	</div>
+</div>
+          </div>
+        </div>
+      </div>
+{% endblock content %}
+
+{% block extra_js %}
+	<script>
+    $(".prjtip img").css("cursor", "pointer");
+    $(".prjtip img").click(function(){
+        window.location.href = 'project.html';
+    });
+	</script>
+ <script>
+       function add_fav(current_elem, fav_id) {
+
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: "{% url 'project:fav' %}",
+            data: {'fav_id': fav_id},
+            async: true,
+            beforeSend: function (xhr, settings) {
+                xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+            },
+            success: function (data) {
+                if (data.status == 'fail') {
+                    if (data.msg == '用户未登录') {
+                        window.location.href = "{% url 'users:login' %}";
+                    } else {
+                        alert(data.msg)
+                    }
+
+                } else if (data.status == 'success') {
+                    current_elem.text(data.msg)
+                }
+            },
+        });
+    }
+    $("#bnn").click(function () {
+        var type = $(this).attr('data-fav-type');
+        add_fav($(this),type)
+    })
+ </script>
+{% endblock extra_js %}
