@@ -1,0 +1,107 @@
+{% extends 'project_base.html' %}
+
+{% block page_style %}
+	<style>
+#footer {
+    padding: 15px 0;
+    background: #fff;
+    border-top: 1px solid #ddd;
+    text-align: center;
+}
+	</style>
+{% endblock %}
+
+{% block project_content %}
+
+      <div class="page-header">
+        <h1>实名认证 - 申请</h1>
+      </div>
+
+		<ul class="nav nav-tabs" role="tablist">
+		  <li role="presentation" ><a href="#"><span class="badge">1</span> 基本信息</a></li>
+		  <li role="presentation" class="active"><a href="#"><span class="badge">2</span> 资质文件上传</a></li>
+		  <li role="presentation"><a href="#"><span class="badge">3</span> 邮箱确认</a></li>
+		  <li role="presentation"><a href="#"><span class="badge">4</span> 申请确认</a></li>
+		</ul>
+        
+        <form action="{% url 'user:account_id' %}" method="post" role="form" enctype="multipart/form-data" style="margin-top:20px;">
+            {% csrf_token %}
+		  <div class="form-group">
+			<label for="id_pic">手执身份证照片</label>
+			<input type="file" name="pic" id="picture_file" class="form-control">
+            <br>
+            <img id="showPic" src="/static/img/pic.jpg">
+		  </div>
+            <div>
+                <span>{{ msg }}</span>
+            </div>
+          <button type="button" onclick="window.location.href='{% url 'user:account_info' %}'" class="btn btn-default">上一步</button>
+		  <button type="submit" class="btn btn-success">下一步</button>
+
+		</form>
+		<hr>
+{% endblock %}
+
+{% block bottom_script %}
+	<script type="text/javascript">
+        $('#myTab a').click(function (e) {
+          e.preventDefault();
+          $(this).tab('show')
+        });
+
+{#        function uploadPic() {#}
+
+            
+            
+{#            var csrf = $('input[name="csrfmiddlewaretoken"]').val();#}
+{#            var files = $('input[name="picture_file"]').prop('files');#}
+{#            var reader = new FileReader();#}
+{#            reader.readAsText(files[0],'UTF-8');#}
+{#            reader.onload = function (evt) {#}
+{#                var fileString = evt.target.result;#}
+{#                $.ajax({#}
+{#                    url:'{% url "user:account_id" %}',#}
+{#                    type:'post',#}
+{#                    dataType:'json',#}
+{#                    async: true,#}
+{#                    data:{#}
+{#                        'file':fileString,#}
+{#                        'csrfmiddlewaretoken':csrf#}
+{#                    },#}
+{#                    success:function (data) {#}
+{#                    if(data.status == 'success'){#}
+{#                        alert(data.msg);#}
+{#                        window.location.href='{% url 'user:account_id' %}'#}
+{#                    }else if(data.status == 'fail'){#}
+{#                        alert(data.msg);#}
+{#                        window.location.reload();#}
+{#                    }#}
+{#                }#}
+{#                })#}
+{#            };#}
+
+
+{#            var form = document.getElementById('upload'),#}
+{#               formdata = new FormData(form);#}
+{#                console.log('22222222222222222222222');#}
+{#                console.log(formdata);#}
+{#            $.ajax({#}
+{#                url:'{% url "user:account_id" %}',#}
+{#                data:formdata,#}
+{#                type:'post',#}
+{#                async: true,#}
+{#                processData:false,#}
+{#                contentType:false,#}
+{#                success:function(res){#}
+{#                    if(res){#}
+{#                     alert("上传成功！");#}
+{#                    }#}
+{#                console.log(res);#}
+{#                $("#pic").val("");#}
+{#                $(".showUrl").html(res);#}
+{#                $(".showPic").attr("src",res);#}
+{#                }#}
+{#              })#}
+{#            }#}
+	</script>
+{% endblock %}
