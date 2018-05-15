@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block custom_css %}
+	<style>
+#footer {
+    padding: 15px 0;
+    background: #fff;
+    border-top: 1px solid #ddd;
+    text-align: center;
+}
+.seltype {
+    position: absolute;
+    margin-top: 70px;
+    margin-left: 10px;
+    color: red;
+}
+	</style>
+{% endblock custom_css %}
+    <div class="container theme-showcase" role="main">
+        {% block container %}{% endblock container %}
+        {% block body %}
+          <div class="page-header">
+            <h1>实名认证 - 账户类型选择</h1>
+          </div>
+          <div style="padding-top:10px;">
+            <div class="row">
+              <div class="col-xs-6 col-md-3">
+
+              <h2>商业公司</h2>
+                <a href="#" class="thumbnail" tag_id="gs">
+
+                  <img alt="100%x180" src="/static/img/services-box1.jpg" data-holder-rendered="true" style="height: 180px; width: 100%; display: block;">
+                </a>
+              </div>
+              <div class="col-xs-6 col-md-3">
+                <h2>个体工商户</h2>
+                <a href="#" class="thumbnail" tag_id="gt">
+                  <img alt="100%x180" src="/static/img/services-box2.jpg" data-holder-rendered="true" style="height: 180px; width: 100%; display: block;">
+                </a>
+              </div>
+              <div class="col-xs-6 col-md-3">
+                <h2>个人经营</h2>
+                <a href="#" class="thumbnail" tag_id="gr">
+                  <img alt="100%x180" src="/static/img/services-box3.jpg" data-holder-rendered="true" style="height: 180px; width: 100%; display: block;">
+                </a>
+              </div>
+              <div class="col-xs-6 col-md-3">
+                <h2>政府及非营利组织</h2>
+                <a href="#" class="thumbnail" tag_id="zf">
+                  <img alt="100%x180" src="/static/img/services-box4.jpg" data-holder-rendered="true" style="height: 180px; width: 100%; display: block;">
+                </a>
+              </div>
+            </div>
+            <button type="button" class="btn btn-danger btn-lg btn-block" id="Apply">认证申请</button>
+          </div>
+    {% endblock body %}
+    </div> <!-- /container -->
+      <!-- /END THE FEATURETTES -->
+{% block custom_js %}
+	<script>
+    var tag_id = '';
+    $(".thumbnail").click(function(){
+        $('.seltype').remove();
+        $(this).prepend('<div class="glyphicon glyphicon-ok seltype"></div>');
+        tag_id=$(this).attr('tag_id');
+    });
+    $("#Apply").click(function () {
+        if(tag_id){
+         window.location.href='{% url "operation:apply" %}?tag_id='+tag_id
+        }
+        else {
+            alert('请选择认证类型')
+        }
+    });
+	</script>
+{% endblock custom_js %}
