@@ -1,0 +1,5 @@
+Django==1.9.8
+django-pure-pagination==0.3.0
+Pillow==5.1.0
+pkg-resources==0.0.0
+PyMySQL==0.8.1
