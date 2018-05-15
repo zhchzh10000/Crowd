@@ -1,0 +1,316 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1" class=""></li>
+            <li data-target="#myCarousel" data-slide-to="2" class=""></li>
+        </ol>
+        <div class="carousel-inner" role="listbox">
+            {% for banner in all_banner %}
+                {% if forloop.counter == 1 %}
+                    <div class="item active" onclick="window.location.href='project.html'" style="cursor:pointer;">
+                        <img src="{{ MEDIA_URL }}{{ banner.image }}" alt="First slide">
+                    </div>
+                {% else %}
+                    <div class="item " onclick="window.location.href='project.html'" style="cursor:pointer;">
+
+                        <img src="{{ MEDIA_URL }}{{ banner.image }}" alt="First slide">
+
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+        <span class="sr-only">Next</span>
+    </a>
+
+    <!-- /.carousel -->
+
+
+
+    {% for pro in hot_project %}
+        <div class="col-lg-4">
+            <a href="{% url 'projects:detail' pro_id=pro.id %}">
+                <img class="img-circle" src="{{ MEDIA_URL }}{{ pro.image }}" alt="Generic placeholder image"
+                     style="width: 140px; height: 140px;">
+            </a>
+            <h2>{{ pro.name }}</h2>
+            <p>{{ pro.describe }}</p>
+            <p><a class="btn btn-default" href="{% url 'projects:detail' pro_id=pro.id %}"
+                  role="button">项目详情 &raquo;</a></p>
+        </div><!-- /.col-lg-4 -->
+    {% endfor %}
+
+
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div class="box ui-draggable" id="mainBox">
+                    <div class="mHd" style="">
+                        <div class="path">
+                            <a href="{% url 'projects:pros_list' %}?ct=kj">更多...</a>
+
+                        </div>
+
+                        <h3>
+                            科技
+                            <small style="color:#FFF;">开启智慧未来</small>
+                        </h3>
+                    </div>
+
+                    <div class="mBd" style="padding-top:10px;">
+
+                        <div class="row">
+                            {% for category in kj_project %}
+                                <div class="col-md-3">
+
+                                    <div class="thumbnail">
+                                        <a href="{% url 'projects:detail' pro_id=category.id %}">
+                                            <img alt="300x200" src="{{ MEDIA_URL }}{{ category.image }}"/>
+                                        </a>
+                                        <div class="caption">
+                                            <h3 class="break">
+                                                <a href="{% url 'projects:detail' pro_id=category.id %}">{{ category.name }}</a>
+                                            </h3>
+                                            <p>
+                                            <div style="float:left;"><i class="glyphicon glyphicon-screenshot"
+                                                                        title="目标金额"></i> {{ category.money }}
+                                            </div>
+                                            <div style="float:right;"><i title="截至日期"
+                                                                         class="glyphicon glyphicon-calendar"></i>
+                                                {{ category.enddate }}
+                                            </div>
+
+                                            <br>
+                                            <div class="progress" style="margin-bottom: 4px;">
+                                                <div class="progress-bar progress-bar-success" role="progressbar"
+                                                     aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"
+                                                     style="width: {% widthratio category.supportmoney category.money 100 %}%">
+                                                    <span>{% widthratio category.supportmoney category.money 100 %}%</span>
+                                                </div>
+                                            </div>
+                                            <div><span style="float:right;"><i
+                                                    class="glyphicon glyphicon-star-empty"></i></span> <span><i
+                                                    class="glyphicon glyphicon-user"
+                                                    title="支持人数"></i> {{ category.supporter }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div class="box ui-draggable" id="mainBox">
+                    <div class="mHd" style="">
+                        <div class="path">
+                            <a href="{% url 'projects:pros_list' %}?ct=sj">">更多...</a>
+                        </div>
+
+                        <h3>
+                            设计
+                            <small style="color:#FFF;">创意改变生活</small>
+                        </h3>
+                    </div>
+
+                    <div class="mBd" style="padding-top:10px;">
+
+                        <div class="row">
+                            {% for category0 in sj_project %}
+                                <div class="col-md-3">
+
+                                    <div class="thumbnail">
+                                        <a href="{% url 'projects:detail' pro_id=category0.id %}">
+                                            <img alt="300x200" src="{{ MEDIA_URL }}{{ category0.image }}"/>
+                                        </a>
+                                        <div class="caption">
+                                            <h3 class="break">
+                                                <a href="{% url 'projects:detail' pro_id=category0.id %}">{{ category0.name }}</a>
+                                            </h3>
+                                            <p>
+                                            <div style="float:left;"><i class="glyphicon glyphicon-screenshot"
+                                                                        title="目标金额"></i> {{ category0.money }}
+                                            </div>
+                                            <div style="float:right;"><i title="截至日期"
+                                                                         class="glyphicon glyphicon-calendar"></i>
+                                                {{ category0.enddate }}
+                                            </div>
+
+                                            <br>
+                                            <div class="progress" style="margin-bottom: 4px;">
+                                                <div class="progress-bar progress-bar-success" role="progressbar"
+                                                     aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"
+                                                     style="width: {% widthratio category0.supportmoney category0.money 100 %}%">
+                                                    <span>{% widthratio category0.supportmoney category0.money 100 %}% </span>
+                                                </div>
+                                            </div>
+                                            <div><span style="float:right;"><i
+                                                    class="glyphicon glyphicon-star-empty"></i></span> <span><i
+                                                    class="glyphicon glyphicon-user"
+                                                    title="支持人数"></i> {{ category0.supporter }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div class="box ui-draggable" id="mainBox">
+                    <div class="mHd" style="">
+                        <div class="path">
+                            <a href="{% url 'projects:pros_list' %}?ct=ny">">更多...</a>
+                        </div>
+
+                        <h3>
+                            农业
+                            <small style="color:#FFF;">网络天下肥美</small>
+                        </h3>
+                    </div>
+
+                    <div class="mBd" style="padding-top:10px;">
+
+                        <div class="row">
+                            {% for category in ny_project %}
+                                <div class="col-md-3">
+
+                                    <div class="thumbnail">
+                                        <a href="{% url 'projects:detail' pro_id=category.id %}">
+                                            <img alt="300x200" src="{{ MEDIA_URL }}{{ category.image }}"/>
+                                        </a>
+                                        <div class="caption">
+                                            <h3 class="break">
+                                                <a href="{% url 'projects:detail' pro_id=category.id %}">{{ category.name }}</a>
+                                            </h3>
+                                            <p>
+                                            <div style="float:left;"><i class="glyphicon glyphicon-screenshot"
+                                                                        title="目标金额"></i> {{ category.money }}
+                                            </div>
+                                            <div style="float:right;"><i title="截至日期"
+                                                                         class="glyphicon glyphicon-calendar"></i>
+                                                {{ category.enddate }}
+                                            </div>
+
+                                            <br>
+                                            <div class="progress" style="margin-bottom: 4px;">
+                                                <div class="progress-bar progress-bar-success" role="progressbar"
+                                                     aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"
+                                                     style="width:{% widthratio category.supportmoney category.money 100 %}%">
+                                                    <span>{% widthratio category.supportmoney category.money 100 %}%</span>
+                                                </div>
+                                            </div>
+                                            <div><span style="float:right;"><i
+                                                    class="glyphicon glyphicon-star-empty"></i></span> <span><i
+                                                    class="glyphicon glyphicon-user"
+                                                    title="支持人数"></i> {{ category.people }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <div class="box ui-draggable" id="mainBox">
+                    <div class="mHd" style="">
+                        <div class="path">
+                            <a href="{% url 'projects:pros_list' %}?ct=qt">">更多...</a>
+                        </div>
+
+                        <h3>
+                            其他
+                            <small style="color:#FFF;">发现更多惊喜</small>
+                        </h3>
+                    </div>
+
+                    <div class="mBd" style="padding-top:10px;">
+
+                        <div class="row">
+                            {% for category in qt_project %}
+                                <div class="col-md-3">
+
+                                    <div class="thumbnail">
+                                        <a href="{% url 'projects:detail' pro_id=category.id %}">
+                                            <img alt="300x200" src="{{ MEDIA_URL }}{{ category.image }}"/>
+                                        </a>
+                                        <div class="caption">
+                                            <h3 class="break">
+                                                <a href="{% url 'projects:detail' pro_id=category.id %}">{{ category.name }}</a>
+                                            </h3>
+                                            <p>
+                                            <div style="float:left;"><i class="glyphicon glyphicon-screenshot"
+                                                                        title="目标金额"></i> {{ category.money }}
+                                            </div>
+                                            <div style="float:right;"><i title="截至日期"
+                                                                         class="glyphicon glyphicon-calendar"></i>
+                                                {{ category.enddate }}
+                                            </div>
+
+                                            <br>
+                                            <div class="progress" style="margin-bottom: 4px;">
+                                                <div class="progress-bar progress-bar-success" role="progressbar"
+                                                     aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"
+                                                     style="width: {% widthratio category.supportmoney category.money 100 %}%">
+                                                    <span>{% widthratio category.supportmoney category.money 100 %}% </span>
+                                                </div>
+                                            </div>
+                                            <div><span style="float:right;"><i
+                                                    class="glyphicon glyphicon-star-empty"></i></span> <span><i
+                                                    class="glyphicon glyphicon-user"
+                                                    title="支持人数"></i> {{ category.people }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
