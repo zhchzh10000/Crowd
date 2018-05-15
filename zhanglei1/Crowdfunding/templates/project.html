@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block custom_css %}
+	<link rel="stylesheet" href="{% static 'css/theme.css' %}">
+{% endblock %}
+
+{% block style %}
+	<style>
+#footer {
+    padding: 15px 0;
+    background: #fff;
+    border-top: 1px solid #ddd;
+    text-align: center;
+}
+#topcontrol {
+  color: #fff;
+  z-index: 99;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  background: #222;
+  position: relative;
+  right: 14px !important;
+  bottom: 11px !important;
+  border-radius: 3px !important;
+}
+
+#topcontrol:after {
+  /*top: -2px;*/
+  left: 8.5px;
+  content: "\f106";
+  position: absolute;
+  text-align: center;
+  font-family: FontAwesome;
+}
+
+#topcontrol:hover {
+    color: #fff;
+    background: #18ba9b;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    border-bottom-color: #ddd;
+}
+.nav-tabs>li>a {
+    border-radius: 0;
+}
+	</style>
+{% endblock %}
+
+
+{% block content %}
+    <div class="container theme-showcase" role="main">
+
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+                    <nav class="navbar navbar-default" role="navigation">
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav">
+                                <li>
+                                    <a rel="nofollow" href="{% url 'index' %}" class="active"><i class="glyphicon glyphicon-home"></i> 众筹首页</a>
+                                </li>
+                                <li >
+                                    <a rel="nofollow" href="{% url 'project:list' %}"><i class="glyphicon glyphicon-th-large"></i> 众筹项目</a>
+                                </li>
+                                <li>
+                                    <a rel="nofollow" href="{% url 'project:start' %}"><i class="glyphicon glyphicon-edit"></i> 发起众筹</a>
+                                </li>
+                                <li>
+                                    <a rel="nofollow" href="{% url 'project:mine' %}"><i class="glyphicon glyphicon-user"></i> 我的众筹</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+                    {% for project in projects %}
+                    <div class="jumbotron nofollow" style="    padding-top: 10px;">
+                        <h3>
+                            {{ project.title }}
+                        </h3>
+                        <div style="float:left;width:70%;">
+                            {{ project.desc }}
+                        </div>
+                        <div style="float:right;">
+                            <button type="button" class="btn btn-default"><i style="color:#f60" class="glyphicon glyphicon-heart"></i> 关注 {{ project.peoples }}</button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+                    <div class="row clearfix">
+                        <div class="col-md-8 column">
+                             <img alt="140x140" width="740" src="{{ MEDIA_URL }}{{ project.image_head }}" />
+                                <img alt="140x140" width="740" src="{{ MEDIA_URL }}{{ project.image_body }}" />
+
+                        </div>
+
+
+                    <div class="col-md-4 column">
+                        <div class="panel panel-default" style="border-radius: 0px;">
+                                <div class="panel-heading" style="background-color: #fff;border-color: #fff;">
+                                    <span class="label label-success"><i class="glyphicon glyphicon-tag"></i> {{ project.get_status_display }}</span>
+                                </div>
+                                <div class="panel-body">
+                                    <h3 >
+                                        已筹资金：￥{{ project.end_money }}
+                                    </h3>
+                                    <p><span>目标金额 ： {{ project.money }}</span><span style="float:right;">达成 ： {% widthratio project.end_money project.money 100 %}%</span></p>
+                                    <div class="progress" style="height:10px; margin-bottom: 5px;">
+                                      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {% widthratio project.end_money project.money 100 %}%;"></div>
+                                    </div>
+                                    <p>剩余 15 天</p>
+                                    <div>
+                                        <p><span>已有{{ project.supporter }}人支持该项目</span></p>
+                                     <button type="button" class="btn  btn-warning btn-lg btn-block" data-toggle="modal" data-target="#myModal">立即支持</button>
+                                    </div>
+                                </div>
+                                <div class="panel-footer" style="    background-color: #fff;
+                                    border-top: 1px solid #ddd;
+                                    border-bottom-right-radius: 0px;
+                                    border-bottom-left-radius: 0px;">
+                                <div class="container-fluid">
+                                    <div class="row clearfix">
+                                        <div class="col-md-3 column" style="padding:0;">
+                                <img alt="140x140" src="/static/img/services-box2.jpg" data-holder-rendered="true" style="width: 80px; height: 80px;">
+                                </div>
+                                <div class="col-md-9 column">
+                                    <div class="">
+                                        <h4>
+                                            <b>{{ project.company }}</b> <span style="float:right;font-size:12px;" class="label label-success">已认证</span>
+                                        </h4>
+                                        <p style="font-size:12px">
+                                           {{ project.company_desc }}
+
+                                        </p>
+                                        <p style="font-size:12px">
+
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                        <div class="panel panel-default" style="border-radius: 0px;">
+                            <div class="panel-heading">
+                                <h3 >
+                                    ￥1.00 <span style="float:right;font-size:12px;">无限额，447位支持者</span>
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                <p>配送费用：包邮</p>
+                                <p>预计发放时间：项目筹款成功后的50天内</p>
+                                <button type="button" class="btn  btn-warning btn-lg" onclick="window.location.href='{% url 'project:secondss' %}'">支持</button>
+                                <br><br>
+                                <p>感谢您的支持，在众筹开始后，您将以79元的优惠价格获得“遇见彩虹?”智能插座一件（参考价208元）。</p>
+                            </div>
+                        </div>
+
+                        <div class=" panel panel-default" style="border-radius: 0px;">
+                            <div class="panel-heading">
+                                <h3 >
+                                    风险提示
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                               <p>1.众筹并非商品交易，存在一定风险。支持者根据自己的判断选择、支持众筹项目，与发起人共同实现梦想并获得发起人承诺的回报。<br>
+2.众筹平台仅提供平台网络空间及技术支持等中介服务，众筹仅存在于发起人和支持者之间，使用众筹平台产生的法律后果由发起人与支持者自行承担。<br>
+3.本项目必须在2017-06-09之前达到￥10000.00 的目标才算成功，否则已经支持的订单将取消。订单取消或募集失败的，您支持的金额将原支付路径退回。<br>
+4.请在支持项目后15分钟内付款，否则您的支持请求会被自动关闭。<br>
+5.众筹成功后由发起人统一进行发货，售后服务由发起人统一提供；如果发生发起人无法发放回报、延迟发放回报、不提供回报后续服务等情况，您需要直接和发起人协商解决。<br>
+6.如您不同意上述风险提示内容，您有权选择不支持；一旦选择支持，视为您已确认并同意以上提示内容。</p>
+						</div>
+                        </div>
+
+                    <div><h2>为你推荐</h2><hr></div>
+					<div class="prjtip panel panel-default" style="border-radius: 0px;">
+                        {% for recomend in recomends %}
+						<div class="panel-body">
+
+                            <img src="{{ MEDIA_URL }}{{ recomend.image }}" width="100%" height="100%" >
+
+						</div>
+                         {% endfor %}
+					</div>
+                    </div>
+			</div>
+		</div>
+	</div>
+</div>
+
+    </div> <!-- /container -->
+{% endblock %}

@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block content %}
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+      {% for banner in banners %}
+          <li data-target="#myCarousel" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.counter0 == 0 %}active{% else %} {% endif %}"></li>
+      {% endfor %}
+      </ol>
+
+      <div class="carousel-inner" role="listbox">
+      {% for banner in banners %}
+          {% if forloop.counter == 1 %}
+           <div class="item active" onclick="window.location.href='{% url 'project:detail' banner.id %}'" style="cursor:pointer;">
+          <img src="{{ MEDIA_URL }}{{ banner.image }}" alt="First slide">
+           </div>
+              {% else %}
+               <div class="item" onclick="window.location.href='project.html'" style="cursor:pointer;">
+          <img src="{{ MEDIA_URL }}{{ banner.image }}" alt="First slide">
+           </div>
+           {% endif %}
+       {% endfor %}
+        </div>
+      </div>
+
+      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div><!-- /.carousel -->
+
+    <div class="container marketing">
+
+      <div class="row">
+          {% for type in types %}
+        <div class="col-lg-4">
+          <img class="img-circle" src="{{ MEDIA_URL }}{{ type.image }}" alt="Generic placeholder image" style="width: 140px; height: 140px;">
+          <h2>{{ type.name }}</h2>
+          <p>{{ type.remark }}</p>
+          <p><a class="btn btn-default" href="{% url 'project:detail' type.id %}" role="button">项目详情 &raquo;</a></p>
+        </div><!-- /.col-lg-4 -->
+          {% endfor %}
+      </div><!-- /.row -->
+
+{% for tag in pyname %}
+<div class="container">
+	<div class="row clearfix">
+
+ 		<div class="col-md-12 column">
+
+			<div class="box ui-draggable" id="mainBox">
+				<div class="mHd" style="">
+					<div class="path">
+						<a href="{% url 'project:list' %}">更多...</a>
+					</div>
+					<h3>
+						{{ tag.name }} <small style="color:#FFF;">{{ tag.desc }}</small>
+					</h3>
+				</div>
+
+				<div class="mBd" style="padding-top:10px;">
+			<div class="row">
+                   {% for project in tag.project_set.all %}
+				    <div class="col-md-3">
+
+					<div class="thumbnail">
+						<a href="{% url 'project:detail' project.id %}"><img alt="300x200" src="{{ MEDIA_URL }}{{ project.image }}" /></a>
+						<div class="caption">
+							<h3 class="break">
+								<a href="{% url 'project:detail' project.id %}">{{ project.name }}</a>
+							</h3>
+                            <p>
+                                <div style="float:left;"><i class="glyphicon glyphicon-screenshot" title="目标金额" ></i> ${{ project.money }} </div>
+                                <div style="float:right;"><i title="截至日期" class="glyphicon glyphicon-calendar"></i>{{ project.add_time }} </div>
+                            </p>
+                            <br>
+								<div class="progress" style="margin-bottom: 4px;">
+                                  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: {% widthratio project.end_money project.money 100 %}%">
+                                    <span >{% widthratio project.end_money project.money 100 %}% </span>
+                                  </div>
+                                </div>
+                                <div><span style="float:right;"><i class="glyphicon glyphicon-star-empty" ></i></span>  <span ><i class="glyphicon glyphicon-user" title="支持人数"></i> {{ project.supporter }}</span> </div>
+						</div>
+					</div>
+
+				</div>
+                       {% endfor %}
+			</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+</div>
+{% endfor %}
+
+
+
+
+
+ <div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<div class="box ui-draggable" id="mainBox">
+				<div class="mHd" style="">
+					<div class="path">
+						<a href="{% url 'project:list' %}">更多...</a>
+					</div>
+					<h3>
+						其他 <small style="color:#FFF;">发现更多惊喜</small>
+					</h3>
+				</div>
+				<div class="mBd" style="padding-top:10px;">
+			<div class="row">
+            {% for project in project_list %}
+                                        <div class="col-md-3">
+
+                                            <div class="thumbnail">
+                                                <a href="{% url 'project:detail' project.id %}"><img alt="300x200" src="{{ MEDIA_URL }}{{ project.image }}" /></a>
+                                                <div class="caption">
+                                                    <h3 class="break">
+                                                        <a href="{% url 'project:detail' project.id %}">{{ project.name }}</a>
+                                                    </h3>
+                                                    <p>
+                                                        <div style="float:left;"><i class="glyphicon glyphicon-screenshot" title="目标金额" ></i> ${{ project.money }} </div>
+                                                        <div style="float:right;"><i title="截至日期" class="glyphicon glyphicon-calendar"></i>{{ project.add_time }} </div>
+                                                    </p>
+                                                    <br>
+                                                        <div class="progress" style="margin-bottom: 4px;">
+                                                          <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: {% widthratio project.end_money project.money 100 %}%">
+                                                            <span >{% widthratio project.end_money project.money 100 %}% </span>
+                                                          </div>
+                                                        </div>
+                                                        <div><span style="float:right;"><i class="glyphicon glyphicon-star-empty" ></i></span>  <span ><i class="glyphicon glyphicon-user" title="支持人数"></i> {{ project.supporter }}</span> </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        {% endfor %}
+			</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
