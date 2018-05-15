@@ -1,0 +1,82 @@
+{% extends 'project_base.html' %}
+
+{% block page_style %}
+	<style>
+#footer {
+    padding: 15px 0;
+    background: #fff;
+    border-top: 1px solid #ddd;
+    text-align: center;
+}
+	</style>
+{% endblock %}
+
+{% block project_nav %}{% endblock %}
+
+{% block project_content %}
+      <div class="page-header">
+        <h1>实名认证 - 申请</h1>
+      </div>
+
+		<ul class="nav nav-tabs" role="tablist">
+		  <li role="presentation" class="active"><a href="#"><span class="badge">1</span> 基本信息</a></li>
+		  <li role="presentation"><a href="{% url 'user:account_id' %}"><span class="badge">2</span> 资质文件上传</a></li>
+		  <li role="presentation"><a href="#"><span class="badge">3</span> 邮箱确认</a></li>
+		  <li role="presentation"><a href="#"><span class="badge">4</span> 申请确认</a></li>
+		</ul>
+        
+		<form role="form" style="margin-top:20px;">
+            {% csrf_token %}
+              <div class="form-group">
+                <label for="real_name">真实名称</label>
+                <input type="text" class="form-control" id="real_name" placeholder="请输入真实名称">
+              </div>
+              <div class="form-group">
+                <label for="id_card">身份证号码</label>
+                <input type="text" class="form-control" id="id_card" placeholder="请输入身份证号码">
+              </div>
+              <div class="form-group">
+                <label for="phone_num">电话号码</label>
+                <input type="text" class="form-control" id="phone_num" placeholder="请输入电话号码">
+              </div>
+              <button type="button" onclick="window.location.href='{% url 'user:account_type' %}'" class="btn btn-default">上一步</button>
+              <button type="button" id="real_info" class="btn btn-success">下一步</button>
+		</form>
+		<hr>
+{% endblock %}
+{% block bottom_script %}
+	<script>
+        $('#myTab a').click(function (e) {
+          e.preventDefault();
+          $(this).tab('show')
+        });
+
+        $('#real_info').on('click',function () {
+            var real_name = $('#real_name').val();
+            var id_card = $('#id_card').val();
+            var phone_num = $('#phone_num').val();
+            var csrf = $('input[name="csrfmiddlewaretoken"]').val();
+            $.ajax({
+                url:'{% url 'user:account_info' %}',
+                type:'post',
+                dataType:'json',
+                async: true,
+                data:{
+                    'real_name':real_name,
+                    'id_card':id_card,
+                    'phone_num':phone_num,
+                    'csrfmiddlewaretoken':csrf
+                },
+                success:function (data) {
+                    if(data.status == 'success'){
+                        alert(data.msg);
+                        window.location.href='{% url 'user:account_id' %}'
+                    }else if(data.status == 'fail'){
+                        alert(data.msg);
+                        window.location.reload();
+                    }
+                }
+            });
+        })
+	</script>
+{% endblock %}
