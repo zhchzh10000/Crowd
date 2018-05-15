@@ -1,0 +1,94 @@
+{% extends 'project_base.html' %}
+
+{% block page_style %}
+	<style>
+#footer {
+    padding: 15px 0;
+    background: #fff;
+    border-top: 1px solid #ddd;
+    text-align: center;
+}
+.seltype {
+    position: absolute;
+    margin-top: 70px;
+    margin-left: 10px;
+    color: red;
+}
+</style>
+{% endblock %}
+
+{% block project_nav %}{% endblock %}
+
+{% block project_content %}
+
+      <div class="page-header">
+        <h1>实名认证 - 账户类型选择</h1>
+      </div>
+
+	  <form role="form" style="padding-top:10px;">
+            {% csrf_token %}
+          <div class="row">
+              <div class="col-xs-6 col-md-3">
+                  <h2>商业公司</h2>
+                  <a href="#" class="thumbnail" type_id="0">
+                      <img alt="100%x180" src="/static/img/services-box1.jpg" data-holder-rendered="true" style="height: 180px; width: 100%; display: block;">
+                  </a>
+              </div>
+
+              <div class="col-xs-6 col-md-3">
+                  <h2>个体工商户</h2>
+                  <a href="#" class="thumbnail" type_id="1">
+                      <img alt="100%x180" src="/static/img/services-box2.jpg" data-holder-rendered="true" style="height: 180px; width: 100%; display: block;">
+                  </a>
+              </div>
+
+              <div class="col-xs-6 col-md-3">
+                  <h2>个人经营</h2>
+                  <a href="#" class="thumbnail" type_id="2">
+                      <img alt="100%x180" src="/static/img/services-box3.jpg" data-holder-rendered="true" style="height: 180px; width: 100%; display: block;">
+                  </a>
+              </div>
+
+              <div class="col-xs-6 col-md-3">
+                  <h2>政府及非营利组织</h2>
+                  <a href="#" class="thumbnail" type_id="3">
+                      <img alt="100%x180"  src="/static/img/services-box4.jpg" data-holder-rendered="true" style="height: 180px; width: 100%; display: block;">
+                  </a>
+              </div>
+          </div>
+	      <button id="account_type" type="button" class="btn btn-danger btn-lg btn-block">认证申请</button>
+      </form>
+{% endblock %}
+
+{% block bottom_script %}
+	<script>
+        var type_id = '';
+        $(".thumbnail").click(function(){
+            $('.seltype').remove();
+            $(this).prepend('<div class="glyphicon glyphicon-ok seltype"></div>');
+            type_id = $(this).attr('type_id');
+        });
+
+        $('#account_type').on('click',function () {
+            var csrf = $('input[name="csrfmiddlewaretoken"]').val();
+            $.ajax({
+                url:'{% url 'user:account_type' %}',
+                type:'post',
+                dataType:'json',
+                async: true,
+                data:{
+                    'type_id':type_id,
+                    'csrfmiddlewaretoken':csrf
+                },
+                success:function (data) {
+                    if(data.status == 'success'){
+                        window.location.href='{% url 'user:account_info' %}'
+                    }else if(data.status == 'fail'){
+                        alert(data.msg);
+                        window.location.reload();
+                    }
+                }
+            });
+        })
+	</script>
+{% endblock %}
