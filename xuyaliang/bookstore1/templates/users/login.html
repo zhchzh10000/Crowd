@@ -10,14 +10,19 @@
             password = $('#pwd').val()
             csrf = $('input[name="csrfmiddlewaretoken"]').val()
             remember = $('input[name="remember"]').prop('checked')
+
             //发起ajax
             params = {
                 'username':username,
                 'password':password,
                 'csrfmiddlewaretoken':csrf,
                 'remember':remember,
+
             }
+            console.log('params:',params)
             $.post('/user/login_check/',params,function (data) {
+                console.log('data:',data)
+
                 if (data.res == 0){
                     $('#username').next().html('用户名或密码错误').show()
                 }
@@ -47,9 +52,19 @@
                 <a href="{% url 'user:register' %}">立即注册</a>
             </div>
             <div class="form_input">
+                {% csrf_token %}
+                <input type="text" id="username" class="name_input" value="{{ username }}" placeholder="请输入用户名">
+                <div class="user_error">输入错误</div>
+                <input type="password" id="pwd" class="pass_input" placeholder="请输入密码">
+                <div class="pwd_error">输入错误</div>
 
 
-
+                <div class="more_input clearfix">
+                    <input type="checkbox" name="remember"{{ checked }}>
+                    <label>记住用户名</label>
+                    <a href="#">忘记密码</a>
+                </div>
+                <input type="button" id="btnLogin" value="登录" class="input_submit">
             </div>
         </div>
     </div>

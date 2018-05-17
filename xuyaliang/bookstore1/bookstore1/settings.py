@@ -83,7 +83,7 @@ DATABASES = {
         'NAME': 'bookstore',
         'USER': 'atguigu',
         'PASSWORD':'atguigu',
-        'HOST': '192.168.20.47',
+        'HOST': '127.0.0.1',
         'PORT': 3306
     }
 }
@@ -112,8 +112,8 @@ STATICFILES_DIRS = [
 ]
 TINYMCE_DEFAULT_CONFIG = {
     'theme':'advanced',
-    'width':600,
-    'height':400,
+    'width': 600,
+    'height': 400,
 }
 MEDIA_ROOT = os.path.join(BASE_DIR, "static")
 CACHES = {

@@ -3,6 +3,7 @@
 {% block title %}尚硅谷书城-注册{% endblock %}
 {% block topfiles%}{% endblock topfiles %}
 {% block header_con %}{% endblock header_con %}
+{% block search_bar %}{% endblock search_bar %}
 {% block body %}
 <div class="register_con">
     <div class="l_con fl">
@@ -14,7 +15,7 @@
     <div class="r_con fr">
         <div class="reg_title clearfix">
             <h1>用户注册</h1>
-            <a href="#">登录</a>
+            <a href="{% url 'user:login' %}">登录</a>
         </div>
         <div class="reg_form clearfix">
             <form method="post" action="/user/register_handle/">
@@ -52,24 +53,7 @@
             </ul>
             </form>
         </div>
-
     </div>
-
 </div>
-
-<div class="footer no-mp">
-    <div class="foot_link">
-        <a href="#">关于我们</a>
-        <span>|</span>
-        <a href="#">联系我们</a>
-        <span>|</span>
-        <a href="#">招聘人才</a>
-        <span>|</span>
-        <a href="#">友情链接</a>
-    </div>
-    <p>CopyRight © 2016 北京尚硅谷信息技术有限公司 All Rights Reserved</p>
-    <p>电话：010-****888    京ICP备*******8号</p>
-</div>
-
 {% endblock body %}
 {% block cart_count %}{% endblock cart_count %}
