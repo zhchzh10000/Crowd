@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keys" content="">
+    <meta name="author" content="">
+	<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/login.css' %}">
+	<style>
+
+	</style>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <div><a class="navbar-brand" href="{% url 'index' %}" style="font-size:32px;">尚筹网-创意产品众筹平台</a></div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <form class="form-signin" role="form" action="/user/register/" method="post">
+        <h2 class="form-signin-heading"><i class="glyphicon glyphicon-log-in"></i> 用户注册</h2>
+		  <div class="form-group has-success has-feedback">
+			<input type="text" class="form-control" id="username" placeholder="请输入登录账号" autofocus name="username">
+			<span class="glyphicon glyphicon-user form-control-feedback"></span>
+		  </div>
+		  <div class="form-group has-success has-feedback">
+			<input type="text" class="form-control" id="password" placeholder="请输入登录密码" style="margin-top:10px;" name="password">
+			<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+		  </div>
+		  <div class="form-group has-success has-feedback">
+			<input type="text" class="form-control" id="email" placeholder="请输入邮箱地址" style="margin-top:10px;" name="email">
+			<span class="glyphicon glyphicon glyphicon-envelope form-control-feedback"></span>
+		  </div>
+		  <div class="form-group has-success has-feedback">
+
+			<select class="form-control" name="usercategory" id="usercategory">
+                <option value="company" >企业</option>
+                <option value="personal" >个人</option>
+            </select>
+		  </div>
+        <div class="checkbox">
+          <label>
+            忘记密码
+          </label>
+          <label style="float:right">
+            <a href="{% url 'user:login' %}">我有账号</a>
+          </label>
+        </div>
+{#          <input type="submit" name="" id="" value="提交">#}
+        <button class="btn btn-lg btn-success btn-block" id="btnRegister">注册</button>
+          {% csrf_token %}
+      </form>
+    </div>
+    <script src="{% static 'jquery/jquery-2.1.1.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script>
+        $(function () {
+            $('#btnRegister').click(function () {
+                // 获取用户名和密码
+                username = $('#username').val()
+                password = $('#password').val()
+                email = $('#email').val()
+                usercategory = $("#usercategory option:selected").val()
+                csrf = $('input[name="csrfmiddlewaretoken"]').val()
+                //remember = $('input[name="remember"]').prop('checked')
+                // 发起ajax请求
+                params = {'username':username, 'password':password,
+                        'csrfmiddlewaretoken':csrf, 'email':email,
+                        'usercategory':usercategory}
+                $.post('/user/register/', params, function (data) {
+                    // 用户名密码错误 {'res': 0}
+                    // 登录成功 {'res': 1}
+                    if (data.res == 200){
+                        // 跳转页面
+                        {#location.href = {% url 'user:userinfo' %} // /user/#}
+                        window.location.href = '{% url 'index' %}'
+                    }
+                    else
+                    {
+                        $('#username').next().html('用户名或密码错误').show()
+
+
+                    }
+                })
+            })
+        })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/theme.css' %}">
+
+</head>
+
+<body>
+    <div>
+        <p>选择要购买的水果</p>
+        <ul class="fruit">
+            <li><input type="checkbox" value="001"/>苹果</li>
+            <li><input type="checkbox" value="002"/>雪梨</li>
+            <li><input type="checkbox" value="003"/>芒果</li>
+            <li><input type="checkbox" value="004"/>菠萝</li>
+        </ul>
+        <input type="checkbox" id="All"/>
+        <button id="checkAll">全选</button>
+        <button id="nothing">全不选</button>
+        <button id="reverseAll">反选</button>
+        <button class="chooseFruit">购买</button>
+
+        <script type="text/javascript">
+
+            <!-- 选择全部/全不选 -->
+            $("#All").click(function(){
+                if("this.checked"){
+                    $("#fruit :checkbox").prop("checked", true);
+                }else{
+                    $("#fruit :checkbox").prop("checked", false);
+                }
+            });
+
+            <!--选择全部-->
+            $("#checkAll").click(function(){
+                $("#fruit :checkbox").prop("checked", true);
+            });
+
+            <!--全不选-->
+            $("#nothing").click(function(){
+                $("#fruit :checkbox").prop("checked", false);
+            });
+
+            <!--反选-->
+            $("#reverseAll").click(function(){
+                $("#fruit :checkbox").each(function(i){
+                    $(this).prop("checked", !$(this).prop("checked"));
+                });
+            });
+
+            <!--获取选中复选框的值-->
+            $(".chooseFruit").click(function(){
+                var arr = new Array();
+                $("#fruit :checkbox[checked]").each(function(i){
+                    arr[i] = $(this).val();
+                });
+                var vals = arr.join(",");
+                console.log(vals);
+            });
+        </script>
+    </div>
+
+        <script src="{% static 'jquery/jquery-2.1.1.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'script/docs.min.js' %}"></script>
+<script src="{% static 'script/back-to-top.js' %}"></script>
+</body>
+</html>

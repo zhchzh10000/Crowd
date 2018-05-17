@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+	<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/theme.css' %}">
+	<style>
+#footer {
+    padding: 15px 0;
+    background: #fff;
+    border-top: 1px solid #ddd;
+    text-align: center;
+}
+#topcontrol {
+  color: #fff;
+  z-index: 99;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  background: #222;
+  position: relative;
+  right: 14px !important;
+  bottom: 11px !important;
+  border-radius: 3px !important;
+}
+
+#topcontrol:after {
+  /*top: -2px;*/
+  left: 8.5px;
+  content: "\f106";
+  position: absolute;
+  text-align: center;
+  font-family: FontAwesome;
+}
+
+#topcontrol:hover {
+    color: #fff;
+    background: #18ba9b;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+	</style>
+  </head>
+  <body>
+ <div class="navbar-wrapper">
+      <div class="container">
+			<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			  <div class="container">
+				<div class="navbar-header">
+				  <a class="navbar-brand" href="#" style="font-size:32px;">尚筹网-创意产品众筹平台</a>
+				</div>
+            <div id="navbar" class="navbar-collapse collapse" style="float:right;">
+              <ul class="nav navbar-nav">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> 张三<span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="member.html"><i class="glyphicon glyphicon-scale"></i> 会员中心</a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-comment"></i> 消息</a></li>
+                    <li class="divider"></li>
+                    <li><a href="index.html"><i class="glyphicon glyphicon-off"></i> 退出系统</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+			  </div>
+			</nav>
+
+      </div>
+    </div>
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-sm-3 col-md-3 column">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="thumbnail" style="    border-radius: 0px;">
+						<img src="{% static 'img/services-box1.jpg' %}" class="img-thumbnail" alt="A generic square placeholder image with a white border around it, making it resemble a photograph taken with an old instant camera">
+						<div class="caption" style="text-align:center;">
+							<h3>
+								ZhangSan
+							</h3>
+							<span class="label label-danger" style="cursor:pointer;" onclick="window.location.href='{% url 'user:usercertify_apply' %}'">未实名认证</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="list-group">
+				<div class="list-group-item" style="cursor:pointer;" onclick="window.location.href='{% url 'user:userinfo' %}'">
+					资产总览<span class="badge"><i class="glyphicon glyphicon-chevron-right"></i></span>
+				</div>
+				<div class="list-group-item active">
+					我的众筹<span class="badge"><i class="glyphicon glyphicon-chevron-right"></i></span>
+				</div>
+			</div>
+		</div>
+            <div class="col-sm-9 col-md-9 column">
+              <ul id="myTab" style="" class="nav nav-pills" role="tablist">
+                <li role="presentation" class="active"><a href="#home" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">我的众筹</a></li>
+                <li role="presentation"><a href="#profile">众筹资产</a></li>
+              </ul>
+              <div id="myTabContent" class="tab-content" style="margin-top:10px;">
+                  <div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab">
+                  
+                        <ul id="myTab1" class="nav nav-tabs">
+                          <li role="presentation" class="active"><a href="#support">我支持的</a></li>
+                          <li role="presentation"><a href="#attension">我关注的</a></li>
+                          <li role="presentation"><a href="#add">我发起的</a></li>
+                            <li class=" pull-right">
+                                 <button type="button" class="btn btn-warning" onclick="window.location.href='start.html'">发起众筹</button>
+                            </li>
+                        </ul>                  
+                        <div id="myTab1" class="tab-content" style="margin-top:10px;">
+                            <div role="tabpanel" class="tab-pane fade active in" id="support" aria-labelledby="home-tab">
+                                <div class="container-fluid">
+                                    <div class="row clearfix">
+                                        <div class="col-md-12 column">
+                                             <span class="label label-warning">全部</span> <span class="label" style="color:#000;">已支付</span> <span class="label " style="color:#000;">未支付</span> 
+                                        </div>
+                                        <div class="col-md-12 column" style="margin-top:10px;padding:0;">
+                                            <table class="table table-bordered" style="text-align:center;">
+                                              <thead>
+                                                <tr style="background-color:#ddd;">
+                                                  <td>项目信息</td>
+                                                  <td width="90">支持日期</td>
+                                                  <td width="120">支持金额（元）</td>
+                                                  <td width="80">回报数量</td>
+                                                  <td width="80">交易状态</td>
+                                                  <td width="120">操作</td>
+                                                </tr>
+                                              </thead>
+                                              <tbody>
+                                              {% for order in orderinfo %}
+                                                <tr>
+                                                  <td style="vertical-align:middle;">
+                                                    <div class="thumbnail">
+                                                        <div class="caption">
+                                                            <h3>
+                                                                {{ order.pro.name }}
+                                                            </h3>
+                                                            <p>
+                                                                订单编号:{{ order.order_id }}
+                                                            </p>
+                                                            <p>
+                                                                <div style="float:left;"><i class="glyphicon glyphicon-screenshot" title="目标金额" ></i> 已完成 {{ order.pro.get_rate }}% </div>
+                                                                <div style="float:right;"><i title="截至日期" class="glyphicon glyphicon-calendar"></i> 剩余{{ order.pro.get_left_day }}天 </div>
+                                                            </p>
+                                                            <br>
+                                                                <div class="progress" style="margin-bottom: 4px;">
+                                                                  <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{ order.pro.get_rate }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ order.pro.get_rate }}%">
+                                                                    <span >{{ order.pro.get_active_status_display }}</span>
+                                                                  </div>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                  </td>
+                                                  <td style="vertical-align:middle;">{{ order.createtime | date:'Y年n月d日 H:i ' }}</td>
+                                                  <td style="vertical-align:middle;">{{ order.pay_price }}<br>(运费：{{ order.freight }} )</td>
+                                                  <td style="vertical-align:middle;">{{ order.repay_count }}</td>
+                                                  <td style="vertical-align:middle;">{{ order.get_order_status_display }}</td>
+                                                  <td style="vertical-align:middle;">
+                                                    <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+                                                          <button type="button" class="btn btn-default">删除订单</button>
+                                                          <button type="button" class="btn btn-default">交易详情</button>
+                                                    </div>
+                                                  </td>
+                                                </tr>
+                                              {% endfor %}
+                                              </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="attension" aria-labelledby="attension-tab">
+                                <div class="container-fluid">
+                                    <div class="row clearfix">
+                                        <div class="col-md-12 column" style="padding:0;">
+                                            <table class="table table-bordered" style="text-align:center;">
+                                              <thead>
+                                                <tr style="background-color:#ddd;">
+                                                  <td>项目信息</td>
+                                                  <td width="120">支持人数</td>
+                                                  <td width="120">关注人数</td>
+                                                  <td width="120">操作</td>
+                                                </tr>
+                                              </thead>
+                                              <tbody>
+                                              {% for project in fav_project %}
+                                                <tr>
+                                                  <td style="vertical-align:middle;">
+                                                    <div class="thumbnail">
+                                                        <div class="caption">
+                                                            <p>
+                                                                {{ project.name }}
+                                                            </p>
+                                                            <p>
+                                                                <i class="glyphicon glyphicon-jpy"></i> 已筹集 {{ project.raised_money }}元
+                                                            </p>
+                                                            <p>
+                                                                <div style="float:left;"><i class="glyphicon glyphicon-screenshot" title="目标金额" ></i> 已完成 {{ project.get_rate }}% </div>
+                                                                <div style="float:right;"><i class="glyphicon glyphicon-calendar"></i> 剩余{{ project.get_left_day }}天 </div>
+                                                            </p>
+                                                            <br>
+                                                                <div class="progress" style="margin-bottom: 4px;">
+                                                                  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{ project.get_rate }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ project.get_rate }}%">
+                                                                    <span >{{ project.get_active_status_display }}</span>
+                                                                  </div>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                  </td>
+                                                  <td style="vertical-align:middle;">{{ project.support_people }}</td>
+                                                  <td style="vertical-align:middle;">{{ project.fav_num }}</td>
+                                                  <td style="vertical-align:middle;">
+                                                    <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+                                                          <button type="button" class="btn btn-default canlefav" value="{{ project.id }}">取消关注</button>
+                                                    </div>
+                                                  </td>
+                                                </tr>
+                                              {% endfor %}
+                                              </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade  " id="add" aria-labelledby="add-tab">
+                                <div class="container-fluid">
+                                    <div class="row clearfix">
+                                        <div class="col-md-12 column">
+                                             <span class="label label-warning">全部</span> <span class="label" style="color:#000;">众筹中</span> <span class="label " style="color:#000;">众筹成功</span>  <span class="label " style="color:#000;">众筹失败</span>
+                                        </div>
+                                        <div class="col-md-12 column" style="padding:0;margin-top:10px;">
+                                            <table class="table table-bordered" style="text-align:center;">
+                                              <thead>
+                                                <tr style="background-color:#ddd;">
+                                                  <td>项目信息</td>
+                                                  <td width="120">募集金额（元）</td>
+                                                  <td width="80">当前状态</td>
+                                                  <td width="120">操作</td>
+                                                </tr>
+                                              </thead>
+                                              <tbody>
+                                              {% for pro in project %}
+                                                <tr>
+                                                  <td style="vertical-align:middle;">
+                                                    <div class="thumbnail">
+                                                        <div class="caption">
+                                                            <p>
+                                                                {{ pro.name }}
+                                                            </p>
+                                                            <p>
+                                                                <div style="float:left;"><i class="glyphicon glyphicon-screenshot" title="目标金额" ></i> 已完成 {{ pro.get_rate }}% </div>
+                                                                <div style="float:right;"><i title="截至日期" class="glyphicon glyphicon-calendar"></i> {{ pro.get_left_day }} </div>
+                                                            </p>
+                                                            <br>
+                                                                <div class="progress" style="margin-bottom: 4px;">
+                                                                  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{ pro.get_rate }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ pro.get_rate }}%">
+                                                                    <span >{{ pro.get_active_status_display }}</span>
+                                                                  </div>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                  </td>
+                                                  <td style="vertical-align:middle;">{{ pro.raised_money }}</td>
+                                                  <td style="vertical-align:middle;">草稿</td>
+                                                  <td style="vertical-align:middle;">
+                                                    <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+                                                          <button type="button" class="btn btn-default">项目预览</button>
+                                                          <button type="button" class="btn btn-default">修改项目</button>
+                                                          <button type="button" class="btn btn-default">删除项目</button>
+                                                          <button type="button" class="btn btn-default">问题管理</button>
+                                                    </div>
+                                                  </td>
+                                                </tr>
+                                              {% endfor %}
+                                              </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                            
+                        </div>
+                  
+                  </div>
+                  <div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab">
+                  众筹资产
+                  </div>
+            </div>
+		</div>
+	</div>
+</div>
+        <div class="container" style="margin-top:20px;">
+            <div class="row clearfix">
+                <div class="col-md-12 column">
+                    <div id="footer">
+                        <div class="footerNav">
+                             <a rel="nofollow" href="http://www.atguigu.com">关于我们</a> | <a rel="nofollow" href="http://www.atguigu.com">服务条款</a> | <a rel="nofollow" href="http://www.atguigu.com">免责声明</a> | <a rel="nofollow" href="http://www.atguigu.com">网站地图</a> | <a rel="nofollow" href="http://www.atguigu.com">联系我们</a>
+                        </div>
+                        <div class="copyRight">
+                            Copyright ?2017-2017atguigu.com 版权所有
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    <script src="{% static 'jquery/jquery-2.1.1.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'script/docs.min.js' %}"></script>
+    <script src="{% static 'script/back-to-top.js' %}"></script>
+
+   <script type="text/javascript">
+                //取消我的关注
+                function add_fav(current_elem, pro_id,) {
+                    $.ajax({
+                        cache: false,
+                        type: "POST",
+                        url: "/project/add_fav/",
+                        data: {'pro_id': pro_id, },
+                        async: true,
+                        beforeSend: function (xhr, settings) {
+                            xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                        },
+                        success: function (data) {
+                            if (data.status == 'fail') {
+                                if (data.msg == '用户未登录') {
+                                    window.location.href = "login.html";
+                                } else {
+                                    alert(data.msg)
+                                }
+
+                            } else if (data.status == 'success') {
+                                {#current_elem.text(data.msg)#}
+                                $(current_elem).text(data.msg);
+                            }
+                        },
+                    });
+                }
+
+                $('.canlefav').on('click', function () {
+                    pro_id = $(this).val();
+                    add_fav($(this), pro_id);
+                    {#add_fav($(this), 6, 2);#}
+                });
+ 	</script>
+
+	<script>
+$('#myTab a').click(function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
+$('#myTab1 a').click(function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
+	</script>
+  </body>
+</html>
