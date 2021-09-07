@@ -15,7 +15,7 @@ itsdangerous==0.24
 jieba==0.39
 kombu==4.1.0
 olefile==0.44
-Pillow==4.3.0
+Pillow==8.3.2
 pycryptodome==3.4.7
 pycryptodomex==3.6.0
 PyMySQL==0.7.11
